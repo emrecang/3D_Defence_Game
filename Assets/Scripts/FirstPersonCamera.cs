@@ -6,64 +6,132 @@ using System.Runtime.InteropServices;
 
 public class FirstPersonCamera : MonoBehaviour
 {
-    [DllImport("user32.dll")]
-    static extern bool SetCursorPos(int X, int Y);
-    [DllImport("user32.dll")]
-    static extern int ShowCursor(bool bShow);
-
-    Transform CameraTransform;
-
-    int ScreenCenterX;
-    int ScreenCenterY;
-    // Start is called before the first frame update
-    void Start()
-    {
-        ScreenCenterY = Screen.height / 2;
-        ScreenCenterX = Screen.width / 2;
-        CameraTransform = GetComponentInChildren<Transform>();
-    }
-
-    // Update is called once per frame
+    public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
+    public RotationAxes axes = RotationAxes.MouseXAndY;
+    public float sensitivityX = 4F;
+    public float sensitivityY = 4F;
+    public float minimumX = -360F;
+    public float maximumX = 360F;
+    public float minimumY = -60F;
+    public float maximumY = 5F;
+    float rotationX = 0F;
+    float rotationY = 0F;
+    private List<float> rotArrayX = new List<float>();
+    float rotAverageX = 0F;
+    private List<float> rotArrayY = new List<float>();
+    float rotAverageY = 0F;
+    public float frameCounter = 20;
+    Quaternion originalRotation;
     void Update()
     {
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //Vector3 lookat = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Quaternion rayQuart = new Quaternion(ray.direction.x, ray.direction.y, ray.direction.z, Quaternion.identity.w);
-        //transform.rotation = rayQuart;
-
-        SetCursorPos(ScreenCenterX, ScreenCenterY);
-        Debug.Log("Y = " + ScreenCenterY);
-        Debug.Log("X = " + ScreenCenterX);
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (axes == RotationAxes.MouseXAndY)
         {
-            Debug.Log("amk emresinin işi");
-            ShowCursor(true);
+            //Resets the average rotation
+            rotAverageY = 0f;
+            rotAverageX = 0f;
+
+            //Gets rotational input from the mouse
+            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+            rotationX += Input.GetAxis("Mouse X") * sensitivityX;
+
+            //Adds the rotation values to their relative array
+            rotArrayY.Add(rotationY);
+            rotArrayX.Add(rotationX);
+
+            //If the arrays length is bigger or equal to the value of frameCounter remove the first value in the array
+            if (rotArrayY.Count >= frameCounter)
+            {
+                rotArrayY.RemoveAt(0);
+            }
+            if (rotArrayX.Count >= frameCounter)
+            {
+                rotArrayX.RemoveAt(0);
+            }
+
+            //Adding up all the rotational input values from each array
+            for (int j = 0; j < rotArrayY.Count; j++)
+            {
+                rotAverageY += rotArrayY[j];
+            }
+            for (int i = 0; i < rotArrayX.Count; i++)
+            {
+                rotAverageX += rotArrayX[i];
+            }
+
+            //Standard maths to find the average
+            rotAverageY /= rotArrayY.Count;
+            rotAverageX /= rotArrayX.Count;
+
+            //Clamp the rotation average to be within a specific value range
+            rotAverageY = ClampAngle(rotAverageY, minimumY, maximumY);
+            rotAverageX = ClampAngle(rotAverageX, minimumX, maximumX);
+
+            //Get the rotation you will be at next as a Quaternion
+            Quaternion yQuaternion = Quaternion.AngleAxis(rotAverageY, Vector3.left);
+            Quaternion xQuaternion = Quaternion.AngleAxis(rotAverageX, Vector3.up);
+
+            //Rotate
+            transform.localRotation = originalRotation * xQuaternion * yQuaternion;
         }
-        if (Input.GetKeyDown(KeyCode.H))
+        else if (axes == RotationAxes.MouseX)
         {
-            Debug.Log("amk emresinin işi2");
-            ShowCursor(false);
+            rotAverageX = 0f;
+            rotationX += Input.GetAxis("Mouse X") * sensitivityX;
+            rotArrayX.Add(rotationX);
+            if (rotArrayX.Count >= frameCounter)
+            {
+                rotArrayX.RemoveAt(0);
+            }
+            for (int i = 0; i < rotArrayX.Count; i++)
+            {
+                rotAverageX += rotArrayX[i];
+            }
+            rotAverageX /= rotArrayX.Count;
+            rotAverageX = ClampAngle(rotAverageX, minimumX, maximumX);
+            Quaternion xQuaternion = Quaternion.AngleAxis(rotAverageX, Vector3.up);
+            transform.localRotation = originalRotation * xQuaternion;
         }
-
+        else
+        {
+            rotAverageY = 0f;
+            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+            rotArrayY.Add(rotationY);
+            if (rotArrayY.Count >= frameCounter)
+            {
+                rotArrayY.RemoveAt(0);
+            }
+            for (int j = 0; j < rotArrayY.Count; j++)
+            {
+                rotAverageY += rotArrayY[j];
+            }
+            rotAverageY /= rotArrayY.Count;
+            rotAverageY = ClampAngle(rotAverageY, minimumY, maximumY);
+            Quaternion yQuaternion = Quaternion.AngleAxis(rotAverageY, Vector3.left);
+            transform.localRotation = originalRotation * yQuaternion;
+        }
     }
-    void FixedUpdate()
+    void Start()
     {
-        RotatePlayer(Input.mousePosition.x, Input.mousePosition.y);
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb)
+            rb.freezeRotation = true;
+        originalRotation = transform.localRotation;
     }
-    void RotatePlayer(float mousePosX, float mousePosY)
+    public static float ClampAngle(float angle, float min, float max)
     {
-        Quaternion playerQuartenion = this.transform.rotation;
-        float rotateAxisHorizontal = Mathf.Abs(mousePosX - ScreenCenterX);
-        float rotateAxisVertical = Mathf.Abs(mousePosY - ScreenCenterY);
-
-        Debug.Log(rotateAxisHorizontal);
-        Debug.Log(rotateAxisVertical);
-        playerQuartenion.SetLookRotation(new Vector3(rotateAxisHorizontal, rotateAxisVertical, 1));
-
-        Debug.Log(rotateAxisHorizontal);
-        Debug.Log(rotateAxisVertical);
-        playerQuartenion.SetLookRotation(new Vector3(rotateAxisHorizontal, rotateAxisVertical, 1));
-
+        angle = angle % 360;
+        if ((angle >= -360F) && (angle <= 360F))
+        {
+            if (angle < -360F)
+            {
+                angle += 360F;
+            }
+            if (angle > 360F)
+            {
+                angle -= 360F;
+            }
+        }
+        return Mathf.Clamp(angle, min, max);
     }
 
 }
