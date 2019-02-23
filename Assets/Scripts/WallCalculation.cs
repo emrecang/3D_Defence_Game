@@ -25,8 +25,9 @@ public class WallCalculation : MonoBehaviour
         {
             if (Trap[0] != null)
             {
-                wallOffsetEnd = this.transform.localScale.x - (Trap[trapSize].transform.localScale.x / 2);
-                wallOffsetStart = (Trap[trapSize].transform.localScale.x / 2);
+                wallOffsetEnd = this.transform.localScale.x - (Trap[trapSize].transform.localScale.x / 2); //duvar x genişliği - trap x genişliği /2
+                wallOffsetStart = (Trap[trapSize].transform.localScale.x / 2); //trap x genişliği /2
+
                 placeableAreaLength = (wallOffsetEnd - wallOffsetStart) / 2;
 
             }
@@ -35,11 +36,19 @@ public class WallCalculation : MonoBehaviour
                 wallOffsetEnd = this.transform.position.z + placeableAreaLength;
                 wallOffsetStart = this.transform.position.z - placeableAreaLength;
                 //Debug.Log("Rotation = " + this.transform.rotation.eulerAngles.y + " Then We in Z coord"); Açı verir;
+                if ((wallOffsetStart <= posZ && wallOffsetEnd >= posZ))
+                {
+                    return true;
+                }
             }
             else
             {
                 wallOffsetEnd = this.transform.position.x + placeableAreaLength;
                 wallOffsetStart = this.transform.position.x - placeableAreaLength;
+                if ((wallOffsetStart <= posX && wallOffsetEnd >= posX))
+                {
+                    return true;
+                }
                 // Debug.Log("Rotation = " + this.transform.localRotation.y + " Then We in X coord");
             }
         }
@@ -47,7 +56,8 @@ public class WallCalculation : MonoBehaviour
         Debug.Log("Start Offset = " + wallOffsetStart);
         Debug.Log("End Offset = " + wallOffsetEnd);
 
-        return true;
+        
+        return false;
         //Debug.Log("StartArea = " + (this.transform.position.z - placeableAreaLength));
         //Debug.Log("EndArea = " + (this.transform.position.z + placeableAreaLength));
     }
