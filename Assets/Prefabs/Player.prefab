@@ -211,8 +211,16 @@ MonoBehaviour:
   - {fileID: 3869084620160313342, guid: 7069308a65ddc8245a4d64ffc51426c5, type: 3}
   GhostTrapPrefabs:
   - {fileID: 3652619267863836743, guid: e42c6c286a8990249aea9d6ad50f681c, type: 3}
+  ghostTrap: {fileID: 3652619267863836743, guid: e42c6c286a8990249aea9d6ad50f681c,
+    type: 3}
   index: 0
   tempIndex: 0
+  green: {fileID: 2100000, guid: 49660ff8745ddef4f8a256096cca6151, type: 2}
+  red: {fileID: 2100000, guid: f6f39bb4cd292fc48b35df8d1a5dd36f, type: 2}
+  trapLogic: {fileID: 0}
+  ghost: {fileID: 3652619267863836743, guid: e42c6c286a8990249aea9d6ad50f681c, type: 3}
+  empty: 1
+  isPlacable: 0
 --- !u!114 &4927196269336199371
 MonoBehaviour:
   m_ObjectHideFlags: 0

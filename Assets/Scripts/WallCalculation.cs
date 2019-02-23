@@ -5,14 +5,23 @@ public class WallCalculation : MonoBehaviour
     int trapSize = 0;
     float wallOffsetEnd = 0;
     float wallOffsetStart = 0;
+    float posXStart = 0;
+    float posXEnd = 0;
+    float posZStart = 0;
+    float posZEnd = 0;
     float placeableAreaLength;
     float myAngle;
     public GameObject[] Trap;
     
     public bool CalculateWallScale(float posX, float posZ)
     {
-        myAngle = Mathf.Cos(transform.rotation.eulerAngles.y);
-       
+        posXStart = Mathf.Round(posX);
+        posXEnd = Mathf.Floor(posX);
+        posZStart = Mathf.Round(posZ);
+        posZEnd = Mathf.Floor(posZ);
+
+        //Debug.Log("start "+posXStart);
+        //Debug.Log("end  "+posXEnd);
         if (Trap.Length > 0)
         {
             if (Trap[0] != null)
@@ -27,7 +36,7 @@ public class WallCalculation : MonoBehaviour
             {
                 wallOffsetEnd = this.transform.position.z + placeableAreaLength;
                 wallOffsetStart = this.transform.position.z - placeableAreaLength;
-                if ((wallOffsetStart <= posZ && wallOffsetEnd >= posZ))
+                if ((wallOffsetStart <= posZStart && wallOffsetEnd > posZEnd))
                 {
                     return true;
                 }
@@ -37,14 +46,14 @@ public class WallCalculation : MonoBehaviour
             {
                 wallOffsetEnd = this.transform.position.x  + placeableAreaLength;
                 wallOffsetStart = this.transform.position.x  - placeableAreaLength;
-                if ((wallOffsetStart <= posX && wallOffsetEnd >= posX))
+                if ((wallOffsetStart <= posXStart && wallOffsetEnd >= posXStart))
                 {
                     return true;
                 }
                 // Debug.Log("Rotation = " + this.transform.localRotation.y + " Then We in X coord");
             }
         }
-        Debug.Log("Start Offset = " + wallOffsetStart + " , End Offset = " + wallOffsetEnd);
+        //Debug.Log("Start Offset = " + wallOffsetStart + " , End Offset = " + wallOffsetEnd);
         return false;
     }
 
