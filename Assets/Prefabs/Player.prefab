@@ -207,8 +207,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 386ac967b710d8e4b8f78d36c61bb434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Trap:
+  TrapPrefabs:
   - {fileID: 3869084620160313342, guid: 7069308a65ddc8245a4d64ffc51426c5, type: 3}
+  GhostTrapPrefabs:
+  - {fileID: 3652619267863836743, guid: e42c6c286a8990249aea9d6ad50f681c, type: 3}
+  index: 0
+  tempIndex: 0
 --- !u!114 &4927196269336199371
 MonoBehaviour:
   m_ObjectHideFlags: 0

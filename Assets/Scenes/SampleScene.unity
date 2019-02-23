@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -413,6 +413,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4927196269336199370, guid: 52c766aeff3e090428bffdbf159c2dbe,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8021899803392014579, guid: 52c766aeff3e090428bffdbf159c2dbe,
+        type: 3}
+      propertyPath: TrapPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8021899803392014579, guid: 52c766aeff3e090428bffdbf159c2dbe,
+        type: 3}
+      propertyPath: GhostTrapPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8021899803392014579, guid: 52c766aeff3e090428bffdbf159c2dbe,
+        type: 3}
+      propertyPath: TrapPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 3869084620160313342, guid: 7069308a65ddc8245a4d64ffc51426c5,
+        type: 3}
+    - target: {fileID: 8021899803392014579, guid: 52c766aeff3e090428bffdbf159c2dbe,
+        type: 3}
+      propertyPath: GhostTrapPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 3652619267863836743, guid: e42c6c286a8990249aea9d6ad50f681c,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52c766aeff3e090428bffdbf159c2dbe, type: 3}
 --- !u!1001 &1608999453894803444
@@ -480,6 +507,11 @@ PrefabInstance:
     - target: {fileID: 1608999451997188426, guid: c2403c93933498f4cb7d3ebd9451ef04,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608999451997188431, guid: c2403c93933498f4cb7d3ebd9451ef04,
+        type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
