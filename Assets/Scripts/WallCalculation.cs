@@ -14,12 +14,12 @@ public class WallCalculation : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        CalculateScale();
+        CalculateWallScale();
     }
 
-    void CalculateScale()
+    void CalculateWallScale()
     {
         if (Trap.Length > 0)
         {
@@ -49,5 +49,10 @@ public class WallCalculation : MonoBehaviour
 
         //Debug.Log("StartArea = " + (this.transform.position.z - placeableAreaLength));
         //Debug.Log("EndArea = " + (this.transform.position.z + placeableAreaLength));
+    }
+
+    void CalculateGroundScale()
+    {
+
     }
 }
