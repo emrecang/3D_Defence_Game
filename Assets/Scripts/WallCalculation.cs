@@ -6,21 +6,13 @@ public class WallCalculation : MonoBehaviour
     float wallOffsetEnd = 0;
     float wallOffsetStart = 0;
     float placeableAreaLength;
+    float myAngle;
     public GameObject[] Trap;
-
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        
-    }
-
+    
     public bool CalculateWallScale(float posX, float posZ)
     {
+        myAngle = Mathf.Cos(transform.rotation.eulerAngles.y);
+       
         if (Trap.Length > 0)
         {
             if (Trap[0] != null)
@@ -35,16 +27,16 @@ public class WallCalculation : MonoBehaviour
             {
                 wallOffsetEnd = this.transform.position.z + placeableAreaLength;
                 wallOffsetStart = this.transform.position.z - placeableAreaLength;
-                //Debug.Log("Rotation = " + this.transform.rotation.eulerAngles.y + " Then We in Z coord"); Açı verir;
                 if ((wallOffsetStart <= posZ && wallOffsetEnd >= posZ))
                 {
                     return true;
                 }
+                //Debug.Log("Rotation = " + this.transform.rotation.eulerAngles.y + " Then We in Z coord"); //Açı verirs
             }
             else
             {
-                wallOffsetEnd = this.transform.position.x + placeableAreaLength;
-                wallOffsetStart = this.transform.position.x - placeableAreaLength;
+                wallOffsetEnd = this.transform.position.x  + placeableAreaLength;
+                wallOffsetStart = this.transform.position.x  - placeableAreaLength;
                 if ((wallOffsetStart <= posX && wallOffsetEnd >= posX))
                 {
                     return true;
@@ -52,14 +44,8 @@ public class WallCalculation : MonoBehaviour
                 // Debug.Log("Rotation = " + this.transform.localRotation.y + " Then We in X coord");
             }
         }
-
-        Debug.Log("Start Offset = " + wallOffsetStart);
-        Debug.Log("End Offset = " + wallOffsetEnd);
-
-        
+        Debug.Log("Start Offset = " + wallOffsetStart + " , End Offset = " + wallOffsetEnd);
         return false;
-        //Debug.Log("StartArea = " + (this.transform.position.z - placeableAreaLength));
-        //Debug.Log("EndArea = " + (this.transform.position.z + placeableAreaLength));
     }
 
     public bool CalculateGroundScale(float posX, float posY)
