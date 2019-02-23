@@ -11,7 +11,7 @@ public class FirstPersonCamera : MonoBehaviour
     public float minimumX = -360F;
     public float maximumX = 360F;
     public float minimumY = -60F;
-    public float maximumY = 5F;
+    public float maximumY = 60F;
     private float rotationX = 0F;
     private float rotationY = 0F;
     private List<float> rotArrayX = new List<float>();
