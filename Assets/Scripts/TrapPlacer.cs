@@ -28,8 +28,6 @@ public class TrapPlacer : MonoBehaviour
 
     public void placeTrap(RaycastHit hit)
     {
-
-
         GameObject candidateWall = hit.collider.gameObject;
         WallCalculation cwScript = candidateWall.GetComponent<WallCalculation>();
         Debug.Log(hit.point);
@@ -42,8 +40,7 @@ public class TrapPlacer : MonoBehaviour
         {
             isPlacable = cwScript.CalculateGroundScale(hit.point.x, hit.point.z);
         }
-
-
+        
         if (Input.GetKeyDown(KeyCode.Space) && isPlacable)
         {
             //Sadece duvar için pozisyon. Yer için farklı olacak
