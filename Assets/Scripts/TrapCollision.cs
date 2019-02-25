@@ -5,8 +5,8 @@ using UnityEngine;
 public class TrapCollision : MonoBehaviour
 {
     public bool Empty=true;
+
     
-   
 
     public bool isEmpty()
     {
@@ -15,9 +15,14 @@ public class TrapCollision : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+
         
         if (other.gameObject.CompareTag("Trap"))
         {
+            if(Empty == false && Input.GetKeyDown(KeyCode.F))
+            {
+                Destroy(other.gameObject);
+            }
 
             Empty = false;
             Debug.Log("Heyoo "+ false);
