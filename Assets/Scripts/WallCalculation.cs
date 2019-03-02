@@ -5,8 +5,6 @@ public class WallCalculation : MonoBehaviour
     int trapSize = 0;
     float wallOffsetEnd = 0;
     float wallOffsetStart = 0;
-    float posXStart = 0;
-    float posZStart = 0;
     float placeableAreaLength;
     float myAngle;
     public GameObject[] Trap;
