@@ -52,7 +52,7 @@ public class TrapPlacer : MonoBehaviour
             isPlacable = cwScript.CalculateGroundScale(hit.point.x, hit.point.z);
         }
         
-        if (Input.GetKeyDown(KeyCode.Space) && isPlacable )
+        if (Input.GetKey(KeyCode.Mouse0) && isPlacable )
         {
             if (isPlaceEmpty)
             {
