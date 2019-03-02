@@ -6,7 +6,10 @@ public class TrapCollision : MonoBehaviour
 {
     public bool Empty=true;
 
-    
+    private void Start()
+    {
+        Empty = true;
+    }
 
     public bool isEmpty()
     {
@@ -21,7 +24,9 @@ public class TrapCollision : MonoBehaviour
         {
             if(Empty == false && Input.GetKeyDown(KeyCode.F))
             {
+                Empty = true;
                 Destroy(other.gameObject);
+                return;
             }
 
             Empty = false;

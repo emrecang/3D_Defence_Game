@@ -17,14 +17,13 @@ public class TrapPlacer : MonoBehaviour
     public TrapCollision trapLogic;
     public GameObject ghost;
 
-    public bool empty = true;
-    public bool isPlacable = false;
+    public bool isPlaceEmpty = true;
+    public bool isPlacable = true;
     bool trapSelected = true;
     bool ghostCreated = false;
 
     private void Start()
     {
-        
         fpsLine = GetComponent<LineRenderer>();
         fpsCam = GetComponentInChildren<Camera>();
     }
@@ -41,18 +40,24 @@ public class TrapPlacer : MonoBehaviour
                 {
                     ghostTrap = Instantiate(GhostTrapPrefabs[index], spawnPosCalculator(hit), hit.transform.rotation);
                     ghostCreated = true;
+                    trapLogic = ghostTrap.GetComponent<TrapCollision>();
                     tempIndex = index;
                 }
+
                 if(ghostCreated && (tempIndex != index))
                 {
                     Destroy(ghostTrap);
                     ghostCreated = false;
                 }
+
                 if (ghostCreated)
                 {
                     ghostTrap.transform.position = spawnPosCalculator(hit);
                     ghostTrap.transform.rotation = hit.transform.rotation;
-                    if (isPlacable && empty)
+
+                    isPlaceEmpty = trapLogic.isEmpty();
+
+                    if (isPlacable && isPlaceEmpty)
                     {
                         ghostTrap.gameObject.GetComponent<MeshRenderer>().material = green;
                     }
@@ -60,9 +65,6 @@ public class TrapPlacer : MonoBehaviour
                     {
                         ghostTrap.gameObject.GetComponent<MeshRenderer>().material = red;
                     }
-                    trapLogic = ghostTrap.GetComponent<TrapCollision>();
-                    empty = trapLogic.isEmpty();
-                    //Debug.Log(spawnPosCalculator(hit));
                 }
 
                 isPlacable = false;
@@ -78,13 +80,11 @@ public class TrapPlacer : MonoBehaviour
     {
         GameObject candidateWall = hit.collider.gameObject;
         WallCalculation cwScript = candidateWall.GetComponent<WallCalculation>();
-        
-       // Debug.Log(Mathf.Round(hit.point.x));
 
-        if (hit.collider.gameObject.CompareTag("WallObject"))
-        {
+        if (hit.collider.gameObject.CompareTag("WallObject")){
             isPlacable = cwScript.CalculateWallScale(hit.point.x, hit.point.z);
         }
+
         if(hit.collider.gameObject.CompareTag("GroundObject"))
         {
             isPlacable = cwScript.CalculateGroundScale(hit.point.x, hit.point.z);
@@ -92,13 +92,11 @@ public class TrapPlacer : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space) && isPlacable )
         {
-            //Sadece duvar için pozisyon. Yer için farklı olacak
-            if (empty)
+            if (isPlaceEmpty)
             {
                 Instantiate(TrapPrefabs[index], spawnPosCalculator(hit), hit.transform.rotation);
                 return true;
             }
-            
         }
         return false;
     }

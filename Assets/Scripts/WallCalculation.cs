@@ -6,19 +6,15 @@ public class WallCalculation : MonoBehaviour
     float wallOffsetEnd = 0;
     float wallOffsetStart = 0;
     float posXStart = 0;
-    float posXEnd = 0;
     float posZStart = 0;
-    float posZEnd = 0;
     float placeableAreaLength;
     float myAngle;
     public GameObject[] Trap;
     
     public bool CalculateWallScale(float posX, float posZ)
     {
-        posXStart = Mathf.Round(posX);
-        posXEnd = Mathf.Floor(posX);
-        posZStart = Mathf.Round(posZ);
-        posZEnd = Mathf.Floor(posZ);
+        posX = Mathf.Round(posX);
+        posZ = Mathf.Round(posZ);
 
         //Debug.Log("start "+posXStart);
         //Debug.Log("end  "+posXEnd);
@@ -36,7 +32,7 @@ public class WallCalculation : MonoBehaviour
             {
                 wallOffsetEnd = this.transform.position.z + placeableAreaLength;
                 wallOffsetStart = this.transform.position.z - placeableAreaLength;
-                if ((wallOffsetStart <= posZStart && wallOffsetEnd > posZEnd))
+                if ((wallOffsetStart <= posZ && wallOffsetEnd >= posZ))
                 {
                     return true;
                 }
@@ -46,7 +42,7 @@ public class WallCalculation : MonoBehaviour
             {
                 wallOffsetEnd = this.transform.position.x  + placeableAreaLength;
                 wallOffsetStart = this.transform.position.x  - placeableAreaLength;
-                if ((wallOffsetStart <= posXStart && wallOffsetEnd >= posXStart))
+                if ((wallOffsetStart <= posX && wallOffsetEnd >= posX))
                 {
                     return true;
                 }
