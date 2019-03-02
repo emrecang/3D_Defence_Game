@@ -6,7 +6,8 @@ public class TrapPlacer : MonoBehaviour
 {
     private Camera fpsCam;
     private LineRenderer fpsLine;
-    float maxDistance = 20f;
+    [Range (10,100)]
+    public float maxDistance = 20f;
     public GameObject[] TrapPrefabs;
     public GameObject[] GhostTrapPrefabs;
     public GameObject ghostTrap;
@@ -16,6 +17,8 @@ public class TrapPlacer : MonoBehaviour
     public Material red;
     public TrapCollision trapLogic;
     public GameObject ghost;
+    CursorLockMode wantedCursorMode;
+
 
     public bool isPlaceEmpty = true;
     public bool isWallColliding = false;
@@ -31,6 +34,7 @@ public class TrapPlacer : MonoBehaviour
     public void FixedUpdate()
     {
         GhostTrap();
+        SetCursorState();
     }
  
     public bool placeTrap(RaycastHit hit)
@@ -70,8 +74,11 @@ public class TrapPlacer : MonoBehaviour
     {
         Vector3 originAim = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
+
         if (trapSelected)
         {
+            wantedCursorMode = CursorLockMode.Locked;
+
             if (Physics.Raycast(originAim, fpsCam.transform.forward, out hit, maxDistance))
             {
                 if (!ghostCreated)
@@ -81,7 +88,7 @@ public class TrapPlacer : MonoBehaviour
                     trapLogic = ghostTrap.GetComponent<TrapCollision>();
                     tempIndex = index;
                 }
-                ghostTrap.gameObject.GetComponent<MeshRenderer>().enabled = true;
+
                 if (ghostCreated && (tempIndex != index))
                 {
                     Destroy(ghostTrap);
@@ -110,9 +117,20 @@ public class TrapPlacer : MonoBehaviour
             }
             else
             {
-                ghostTrap.gameObject.GetComponent<MeshRenderer>().enabled = false;
                 Debug.Log("TOO FAR");
             }
         }
+        else
+        {
+            wantedCursorMode = CursorLockMode.Confined;
+        }
+        
+
+    }
+
+    void SetCursorState()
+    {
+        Cursor.lockState = wantedCursorMode;
+        Cursor.visible = (CursorLockMode.Locked != wantedCursorMode);
     }
 }
