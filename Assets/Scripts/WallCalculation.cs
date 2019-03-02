@@ -13,9 +13,7 @@ public class WallCalculation : MonoBehaviour
     {
         posX = Mathf.Round(posX);
         posZ = Mathf.Round(posZ);
-
-        //Debug.Log("start "+posXStart);
-        //Debug.Log("end  "+posXEnd);
+        
         if (Trap.Length > 0)
         {
             if (Trap[0] != null)
@@ -44,10 +42,8 @@ public class WallCalculation : MonoBehaviour
                 {
                     return true;
                 }
-                // Debug.Log("Rotation = " + this.transform.localRotation.y + " Then We in X coord");
             }
         }
-        //Debug.Log("Start Offset = " + wallOffsetStart + " , End Offset = " + wallOffsetEnd);
         return false;
     }
 

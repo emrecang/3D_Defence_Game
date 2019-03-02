@@ -36,6 +36,7 @@ public class TrapPlacer : MonoBehaviour
         {
             if (Physics.Raycast(originAim, fpsCam.transform.forward, out hit, maxDistance))
             {
+               
                 if (!ghostCreated)
                 {
                     ghostTrap = Instantiate(GhostTrapPrefabs[index], spawnPosCalculator(hit), hit.transform.rotation);
@@ -43,8 +44,8 @@ public class TrapPlacer : MonoBehaviour
                     trapLogic = ghostTrap.GetComponent<TrapCollision>();
                     tempIndex = index;
                 }
-
-                if(ghostCreated && (tempIndex != index))
+                ghostTrap.SetActive(true);
+                if (ghostCreated && (tempIndex != index))
                 {
                     Destroy(ghostTrap);
                     ghostCreated = false;
@@ -69,6 +70,11 @@ public class TrapPlacer : MonoBehaviour
 
                 isPlacable = false;
                 placeTrap(hit);
+            }
+            else
+            {
+                ghostTrap.SetActive(false);
+                Debug.Log("TOO FAR");
             }
         }
     }
