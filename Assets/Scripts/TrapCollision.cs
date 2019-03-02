@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TrapCollision : MonoBehaviour
 {
@@ -32,7 +30,6 @@ public class TrapCollision : MonoBehaviour
 
         if (other.gameObject.CompareTag("Trap"))
         {
-            Debug.Log("hi" + isEmptyGet());
             isEmptySet(false);
         }
         

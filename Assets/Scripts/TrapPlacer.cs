@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TrapPlacer : MonoBehaviour
 {
@@ -114,7 +112,8 @@ public class TrapPlacer : MonoBehaviour
                 if(Input.GetKey(KeyCode.F))
                 {
                     trapLogic.deleteTrap(hit);
-                    isPlaceEmpty = trapLogic.isEmptyGet();
+                    isPlaceEmpty = true;
+                    trapLogic.isEmptySet(true);
                 }
                 isPlacable = false;
                 placeTrap(hit);
