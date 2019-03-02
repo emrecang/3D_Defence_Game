@@ -6,20 +6,20 @@ public class TrapPlacer : MonoBehaviour
 {
     private Camera fpsCam;
     private LineRenderer fpsLine;
-    [Range (10,100)]
-    public float maxDistance = 20f;
+    public TrapCollision trapLogic;
     public GameObject[] TrapPrefabs;
     public GameObject[] GhostTrapPrefabs;
     public GameObject ghostTrap;
-    public int index = 0;
-    public int tempIndex = 0;
+    public GameObject ghost;
     public Material green;
     public Material red;
-    public TrapCollision trapLogic;
-    public GameObject ghost;
+    
     CursorLockMode wantedCursorMode;
 
-
+    [Range(10, 100)]
+    public float maxDistance = 20f;
+    public int index = 0;
+    public int tempIndex = 0;
     public bool isPlaceEmpty = true;
     public bool isWallColliding = false;
     public bool isPlacable = true;
@@ -111,7 +111,10 @@ public class TrapPlacer : MonoBehaviour
                         ghostTrap.gameObject.GetComponent<MeshRenderer>().material = red;
                     }
                 }
-
+                if(Input.GetKeyDown(KeyCode.F))
+                {
+                    trapLogic.deleteTrap(hit);
+                }
                 isPlacable = false;
                 placeTrap(hit);
             }

@@ -31,16 +31,19 @@ public class TrapCollision : MonoBehaviour
         
         if (other.gameObject.CompareTag("Trap"))
         {
-            if(Empty == false && Input.GetKeyDown(KeyCode.F))
-            {
-                Empty = true;
-                Destroy(other.gameObject);
-                return;
-            }
-
             Empty = false;
         }
-        
+    }
+
+    public void deleteTrap(RaycastHit hit)
+    {
+        if (Empty == false && hit.collider.gameObject.CompareTag("Trap"))
+        {
+            Destroy(hit.collider.gameObject);
+            WallCollide = true;
+            Empty = true;
+            return;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -49,6 +52,7 @@ public class TrapCollision : MonoBehaviour
         {
             WallCollide = false;
         }
+        
         Empty = true;
     }
 }
