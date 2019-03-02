@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class TrapCollision : MonoBehaviour
 {
-    public bool Empty=true;
     public bool WallCollide = false;
+    bool isEmpty = true;
 
-    private void Start()
+    
+    public void isEmptySet(bool value)
     {
-        Empty = true;
+        isEmpty = value;
     }
 
-    public bool isEmpty()
+    public bool isEmptyGet()
     {
-        return Empty;
+        return isEmpty;
     }
-
+    
     public bool isCollidingWall()
     {
         return WallCollide;
@@ -28,21 +29,22 @@ public class TrapCollision : MonoBehaviour
         {
             WallCollide = true;
         }
-        
+
         if (other.gameObject.CompareTag("Trap"))
         {
-            Empty = false;
+            Debug.Log("hi" + isEmptyGet());
+            isEmptySet(false);
         }
+        
     }
 
     public void deleteTrap(RaycastHit hit)
     {
-        if (Empty == false && hit.collider.gameObject.CompareTag("Trap"))
+        if (hit.collider.gameObject.CompareTag("Trap"))
         {
             Destroy(hit.collider.gameObject);
             WallCollide = true;
-            Empty = true;
-            return;
+            isEmptySet(true);
         }
     }
 
@@ -52,7 +54,7 @@ public class TrapCollision : MonoBehaviour
         {
             WallCollide = false;
         }
-        
-        Empty = true;
+
+        isEmptySet(true);
     }
 }

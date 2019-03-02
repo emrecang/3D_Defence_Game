@@ -20,7 +20,7 @@ public class TrapPlacer : MonoBehaviour
     public float maxDistance = 20f;
     public int index = 0;
     public int tempIndex = 0;
-    public bool isPlaceEmpty = true;
+    public bool isPlaceEmpty = false;
     public bool isWallColliding = false;
     public bool isPlacable = true;
     bool trapSelected = true;
@@ -100,7 +100,7 @@ public class TrapPlacer : MonoBehaviour
                     ghostTrap.transform.position = spawnPosCalculator(hit);
                     ghostTrap.transform.rotation = hit.transform.rotation;
 
-                    isPlaceEmpty = trapLogic.isEmpty();
+                    isPlaceEmpty = trapLogic.isEmptyGet();
 
                     if (isPlacable && isPlaceEmpty)
                     {
@@ -111,9 +111,10 @@ public class TrapPlacer : MonoBehaviour
                         ghostTrap.gameObject.GetComponent<MeshRenderer>().material = red;
                     }
                 }
-                if(Input.GetKeyDown(KeyCode.F))
+                if(Input.GetKey(KeyCode.F))
                 {
                     trapLogic.deleteTrap(hit);
+                    isPlaceEmpty = trapLogic.isEmptyGet();
                 }
                 isPlacable = false;
                 placeTrap(hit);
