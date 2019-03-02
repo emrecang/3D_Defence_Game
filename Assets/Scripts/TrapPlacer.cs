@@ -30,53 +30,7 @@ public class TrapPlacer : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        Vector3 originAim = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
-        RaycastHit hit;
-        if (trapSelected)
-        {
-            if (Physics.Raycast(originAim, fpsCam.transform.forward, out hit, maxDistance))
-            {
-               
-                if (!ghostCreated)
-                {
-                    ghostTrap = Instantiate(GhostTrapPrefabs[index], spawnPosCalculator(hit), hit.transform.rotation);
-                    ghostCreated = true;
-                    trapLogic = ghostTrap.GetComponent<TrapCollision>();
-                    tempIndex = index;
-                }
-                ghostTrap.SetActive(true);
-                if (ghostCreated && (tempIndex != index))
-                {
-                    Destroy(ghostTrap);
-                    ghostCreated = false;
-                }
-
-                if (ghostCreated)
-                {
-                    ghostTrap.transform.position = spawnPosCalculator(hit);
-                    ghostTrap.transform.rotation = hit.transform.rotation;
-
-                    isPlaceEmpty = trapLogic.isEmpty();
-
-                    if (isPlacable && isPlaceEmpty)
-                    {
-                        ghostTrap.gameObject.GetComponent<MeshRenderer>().material = green;
-                    }
-                    else
-                    {
-                        ghostTrap.gameObject.GetComponent<MeshRenderer>().material = red;
-                    }
-                }
-
-                isPlacable = false;
-                placeTrap(hit);
-            }
-            else
-            {
-                ghostTrap.SetActive(false);
-                Debug.Log("TOO FAR");
-            }
-        }
+        GhostTrap();
     }
  
     public bool placeTrap(RaycastHit hit)
@@ -109,5 +63,56 @@ public class TrapPlacer : MonoBehaviour
     {
         Vector3 spawnPos = new Vector3(Mathf.Round(hit.point.x), hit.transform.position.y, Mathf.Round(hit.point.z));
         return spawnPos;
+    }
+
+
+    public void GhostTrap()
+    {
+        Vector3 originAim = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+        RaycastHit hit;
+        if (trapSelected)
+        {
+            if (Physics.Raycast(originAim, fpsCam.transform.forward, out hit, maxDistance))
+            {
+                if (!ghostCreated)
+                {
+                    ghostTrap = Instantiate(GhostTrapPrefabs[index], spawnPosCalculator(hit), hit.transform.rotation);
+                    ghostCreated = true;
+                    trapLogic = ghostTrap.GetComponent<TrapCollision>();
+                    tempIndex = index;
+                }
+                ghostTrap.gameObject.GetComponent<MeshRenderer>().enabled = true;
+                if (ghostCreated && (tempIndex != index))
+                {
+                    Destroy(ghostTrap);
+                    ghostCreated = false;
+                }
+
+                if (ghostCreated)
+                {
+                    ghostTrap.transform.position = spawnPosCalculator(hit);
+                    ghostTrap.transform.rotation = hit.transform.rotation;
+
+                    isPlaceEmpty = trapLogic.isEmpty();
+
+                    if (isPlacable && isPlaceEmpty)
+                    {
+                        ghostTrap.gameObject.GetComponent<MeshRenderer>().material = green;
+                    }
+                    else
+                    {
+                        ghostTrap.gameObject.GetComponent<MeshRenderer>().material = red;
+                    }
+                }
+
+                isPlacable = false;
+                placeTrap(hit);
+            }
+            else
+            {
+                ghostTrap.gameObject.GetComponent<MeshRenderer>().enabled = false;
+                Debug.Log("TOO FAR");
+            }
+        }
     }
 }
