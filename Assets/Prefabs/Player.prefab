@@ -1,5 +1,96 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1050912592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1050912593}
+  - component: {fileID: 1050912596}
+  - component: {fileID: 1050912595}
+  - component: {fileID: 1050912594}
+  m_Layer: 2
+  m_Name: Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1050912593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050912592}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.0849905, y: 0.713, z: 5.4399996}
+  m_LocalScale: {x: 0.1, y: 0.033333335, z: 0.1}
+  m_Children: []
+  m_Father: {fileID: 4927196269336199370}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1050912596
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050912592}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1050912595
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050912592}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!135 &1050912594
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050912592}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4927196268423223552
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +102,7 @@ GameObject:
   - component: {fileID: 4927196268423223583}
   - component: {fileID: 4927196268423223582}
   - component: {fileID: 4927196268423223553}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -26,7 +117,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4927196268423223552}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.099999905, y: 0.71, z: 0.31000042}
+  m_LocalPosition: {x: 0.1, y: 0.7, z: 0.25}
   m_LocalScale: {x: 1, y: 0.33333334, z: 1}
   m_Children: []
   m_Father: {fileID: 4927196269336199370}
@@ -98,7 +189,7 @@ GameObject:
   - component: {fileID: 8021899803392014579}
   - component: {fileID: 4927196269336199371}
   - component: {fileID: 4927196269336199368}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,6 +208,7 @@ Transform:
   m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children:
   - {fileID: 4927196268423223583}
+  - {fileID: 1050912593}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -207,19 +299,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 386ac967b710d8e4b8f78d36c61bb434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trapLogic: {fileID: 0}
   TrapPrefabs:
   - {fileID: 3869084620160313342, guid: 7069308a65ddc8245a4d64ffc51426c5, type: 3}
   GhostTrapPrefabs:
   - {fileID: 3652619267863836743, guid: e42c6c286a8990249aea9d6ad50f681c, type: 3}
   ghostTrap: {fileID: 3652619267863836743, guid: e42c6c286a8990249aea9d6ad50f681c,
     type: 3}
-  index: 0
-  tempIndex: 0
+  ghost: {fileID: 3652619267863836743, guid: e42c6c286a8990249aea9d6ad50f681c, type: 3}
   green: {fileID: 2100000, guid: 49660ff8745ddef4f8a256096cca6151, type: 2}
   red: {fileID: 2100000, guid: f6f39bb4cd292fc48b35df8d1a5dd36f, type: 2}
-  trapLogic: {fileID: 0}
-  ghost: {fileID: 3652619267863836743, guid: e42c6c286a8990249aea9d6ad50f681c, type: 3}
-  empty: 1
+  maxDistance: 100
+  index: 0
+  tempIndex: 0
+  isPlaceEmpty: 1
+  isWallColliding: 0
   isPlacable: 0
 --- !u!114 &4927196269336199371
 MonoBehaviour:
@@ -233,8 +327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9b97bc1cc1e324eab3beb8ccf39c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivityX: 5
-  sensitivityY: 5
+  sensitivityX: 2
+  sensitivityY: 2
   minimumX: -360
   maximumX: 360
   minimumY: -60
@@ -252,4 +346,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05184f002c34d4499608ea16049ccd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 11.61
+  speed: 12

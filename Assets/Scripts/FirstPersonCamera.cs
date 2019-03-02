@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-
 public class FirstPersonCamera : MonoBehaviour
 {
     public float sensitivityX = 4F;

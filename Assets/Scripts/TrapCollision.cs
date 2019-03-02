@@ -4,7 +4,6 @@ public class TrapCollision : MonoBehaviour
 {
     public bool WallCollide = false;
     bool isEmpty = true;
-
     
     public void isEmptySet(bool value)
     {
