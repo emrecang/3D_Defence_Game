@@ -5,6 +5,7 @@ using UnityEngine;
 public class TrapCollision : MonoBehaviour
 {
     public bool Empty=true;
+    public bool WallCollide = false;
 
     private void Start()
     {
@@ -16,9 +17,17 @@ public class TrapCollision : MonoBehaviour
         return Empty;
     }
 
+    public bool isCollidingWall()
+    {
+        return WallCollide;
+    }
+
     private void OnTriggerStay(Collider other)
     {
-
+        if (other.gameObject.CompareTag("WallObject"))
+        {
+            WallCollide = true;
+        }
         
         if (other.gameObject.CompareTag("Trap"))
         {
@@ -30,14 +39,16 @@ public class TrapCollision : MonoBehaviour
             }
 
             Empty = false;
-            Debug.Log("Heyoo "+ false);
-            
         }
         
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.CompareTag("WallObject"))
+        {
+            WallCollide = false;
+        }
         Empty = true;
     }
 }

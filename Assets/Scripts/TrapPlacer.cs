@@ -18,6 +18,7 @@ public class TrapPlacer : MonoBehaviour
     public GameObject ghost;
 
     public bool isPlaceEmpty = true;
+    public bool isWallColliding = false;
     public bool isPlacable = true;
     bool trapSelected = true;
     bool ghostCreated = false;
@@ -29,7 +30,6 @@ public class TrapPlacer : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        
         Vector3 originAim = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
         if (trapSelected)
@@ -69,23 +69,21 @@ public class TrapPlacer : MonoBehaviour
 
                 isPlacable = false;
                 placeTrap(hit);
-
             }
         }
-        
-
     }
  
     public bool placeTrap(RaycastHit hit)
     {
         GameObject candidateWall = hit.collider.gameObject;
         WallCalculation cwScript = candidateWall.GetComponent<WallCalculation>();
+        isWallColliding = trapLogic.isCollidingWall();
 
         if (hit.collider.gameObject.CompareTag("WallObject")){
             isPlacable = cwScript.CalculateWallScale(hit.point.x, hit.point.z);
         }
 
-        if(hit.collider.gameObject.CompareTag("GroundObject"))
+        if(hit.collider.gameObject.CompareTag("GroundObject") && !isWallColliding)
         {
             isPlacable = cwScript.CalculateGroundScale(hit.point.x, hit.point.z);
         }
