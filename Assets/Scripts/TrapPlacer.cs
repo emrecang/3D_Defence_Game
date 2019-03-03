@@ -82,6 +82,7 @@ public class TrapPlacer : MonoBehaviour
                 if (!ghostCreated)
                 {
                     ghostTrap = Instantiate(GhostTrapPrefabs[index], spawnPosCalculator(hit), hit.transform.rotation);
+                    ghostTrap.transform.localScale = TrapPrefabs[index].transform.lossyScale; //koyulcak trap ile ghosttrap aynı boyuta sahip olsun diye.
                     ghostCreated = true;
                     trapLogic = ghostTrap.GetComponent<TrapCollision>();
                     tempIndex = index;

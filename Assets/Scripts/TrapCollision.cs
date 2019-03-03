@@ -39,7 +39,6 @@ public class TrapCollision : MonoBehaviour
         if (hit.collider.gameObject.CompareTag("Trap"))
         {
             Destroy(hit.collider.gameObject);
-            WallCollide = true;
             isEmptySet(true);
         }
     }
