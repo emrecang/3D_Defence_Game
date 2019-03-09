@@ -16,7 +16,7 @@ public class LevelController : MonoBehaviour
 
     public void Start()
     {
-        pos = spawnPositions[0].transform.position;
+        pos = spawnPositions[SpawnPosIndex].transform.position;
         StartCoroutine(MonsterSpawner(waves));
     }
    
