@@ -41,7 +41,7 @@ public class TrapPlacer : MonoBehaviour
         }
         else
         {
-            wantedCursorMode = CursorLockMode.Confined;
+            ExitTrapPhase();
         }
         SetCursorState();
     }
@@ -61,7 +61,7 @@ public class TrapPlacer : MonoBehaviour
             isPlacable = cwScript.CalculateGroundScale(hit.point.x, hit.point.z);
         }
         
-        if (Input.GetKey(KeyCode.Mouse0) && isPlacable )
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isPlacable )
         {
             if (isPlaceEmpty)
             {
@@ -103,6 +103,7 @@ public class TrapPlacer : MonoBehaviour
                 ghostTrap.transform.rotation = hit.transform.rotation;
 
                 isPlaceEmpty = trapLogic.isEmptyGet();
+                Debug.Log(isPlaceEmpty + " <--- this | trap's--->  " + trapLogic.isEmptyGet());
 
                 if (isPlacable && isPlaceEmpty)
                 {
@@ -111,14 +112,18 @@ public class TrapPlacer : MonoBehaviour
                 else
                 {
                     ghostTrap.gameObject.GetComponent<MeshRenderer>().material = red;
+
+                    trapLogic.deletion = false;
                 }
             }
-            if(Input.GetKey(KeyCode.F))
+            if(Input.GetKeyUp(KeyCode.F))
             {
                 trapLogic.deleteTrap(hit);
                 isPlaceEmpty = true;
+                trapLogic.deletion = true;
                 trapLogic.isEmptySet(true);
             }
+
             isPlacable = false;
             placeTrap(hit);
         }
@@ -137,6 +142,11 @@ public class TrapPlacer : MonoBehaviour
         tempIndex = index;
     }
 
+    void ExitTrapPhase()
+    {
+        Destroy(ghostTrap);
+        ghostCreated = false;
+    }
     void SetCursorState()
     {
         Cursor.lockState = wantedCursorMode;

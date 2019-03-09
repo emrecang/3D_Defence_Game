@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    bool trapPhase;
+    TrapPlacer trapPlacerLogic;
 
 
 
     void Start()
     {
-        trapPhase = GetComponent<TrapPlacer>().trapPhase;
-        trapPhase = false;
+        trapPlacerLogic = GetComponent<TrapPlacer>();
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            trapPlacerLogic.trapPhase = true;
+        }
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            trapPlacerLogic.trapPhase = false;
+        }
     }
 }
