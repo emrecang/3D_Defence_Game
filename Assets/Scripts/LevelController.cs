@@ -4,45 +4,32 @@ using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
-    public List<int> waves = new List<int>();
-
+    public int waves = 1;
     public int waveCount = 5;
-    
+
     public GameObject[] Monsters;
     public int Monsterindex = 0;
 
     public GameObject[] spawnPositions;
+    public int SpawnPosIndex = 0;
     private Vector3 pos;
 
-    private void Start()
+    public void Start()
     {
         pos = spawnPositions[0].transform.position;
-        for (int i = 0; i < waveCount; i++)
-        {
-            waves.Add(i);
-            MonsterSpawner(waves[i]);
-        }
-
+        StartCoroutine(MonsterSpawner(waves));
     }
-
-    public void MonsterSpawner(int waves)
+   
+    IEnumerator MonsterSpawner(int waves)
     {
-        switch (waves)
+        if(waves == 1)
         {
-            case 0:
-                Instantiate(Monsters[Monsterindex], pos, spawnPositions[0].transform.rotation);
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            default:
-                break;
-
+            for (int i = 0; i < 10; i++)
+            {
+                Instantiate(Monsters[Monsterindex], pos, spawnPositions[SpawnPosIndex].transform.rotation);
+                yield return new WaitForSeconds(1.0f);
+            }
         }
     }
+    
 }

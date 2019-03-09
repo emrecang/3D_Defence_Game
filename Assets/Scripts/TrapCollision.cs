@@ -52,4 +52,5 @@ public class TrapCollision : MonoBehaviour
 
         isEmptySet(true);
     }
+
 }

@@ -8,6 +8,8 @@ TagManager:
   - GroundObject
   - GhostTrap
   - Trap
+  - Heart
+  - Monster
   layers:
   - Default
   - TransparentFX

@@ -19,4 +19,20 @@ public class MonsterAI : MonoBehaviour
     {
         agent.SetDestination(HeartPosition);
     }
+
+
+
+    private void OnTriggerEnter(Collider o)
+    {
+        if (o.gameObject.CompareTag("Heart"))
+        {
+            Destroy(this.gameObject);
+            o.transform.localScale -= new Vector3(0.2F, 0.2F, 0.2F);
+            if(o.transform.localScale.x < 0.8f)
+            {
+                Destroy(o.gameObject);
+                Debug.Log("My Heart Is Destroyed :( ");
+            }
+        }
+    }
 }
