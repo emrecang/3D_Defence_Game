@@ -24,7 +24,7 @@ public class TrapPlacer : MonoBehaviour
     public bool isPlaceEmpty = false;
     public bool isWallColliding = false;
     public bool isPlacable = true;
-    bool trapSelected = true;
+    public bool trapPhase = true;
     bool ghostCreated = false;
 
     private void Start()
@@ -34,7 +34,15 @@ public class TrapPlacer : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        GhostTrap();
+        if (trapPhase)
+        {
+            wantedCursorMode = CursorLockMode.Locked;
+            GhostTrap();
+        }
+        else
+        {
+            wantedCursorMode = CursorLockMode.Confined;
+        }
         SetCursorState();
     }
  
@@ -76,63 +84,57 @@ public class TrapPlacer : MonoBehaviour
         Vector3 originAim = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
 
-        if (trapSelected)
+        if (Physics.Raycast(originAim, fpsCam.transform.forward, out hit, maxDistance, walls))
         {
-            wantedCursorMode = CursorLockMode.Locked;
-
-            if (Physics.Raycast(originAim, fpsCam.transform.forward, out hit, maxDistance, walls))
+            if (!ghostCreated)
             {
-                if (!ghostCreated)
-                {
-                    ghostTrap = Instantiate(GhostTrapPrefabs[index], spawnPosCalculator(hit), hit.transform.rotation);
-                    ghostTrap.transform.localScale = TrapPrefabs[index].transform.lossyScale; //koyulcak trap ile ghosttrap aynı boyuta sahip olsun diye.
-                    ghostCreated = true;
-                    trapLogic = ghostTrap.GetComponent<TrapCollision>();
-                    tempIndex = index;
-                }
-
-                if (ghostCreated && (tempIndex != index))
-                {
-                    Destroy(ghostTrap);
-                    ghostCreated = false;
-                }
-
-                if (ghostCreated)
-                {
-                    ghostTrap.transform.position = spawnPosCalculator(hit);
-                    ghostTrap.transform.rotation = hit.transform.rotation;
-
-                    isPlaceEmpty = trapLogic.isEmptyGet();
-
-                    if (isPlacable && isPlaceEmpty)
-                    {
-                        ghostTrap.gameObject.GetComponent<MeshRenderer>().material = green;
-                    }
-                    else
-                    {
-                        ghostTrap.gameObject.GetComponent<MeshRenderer>().material = red;
-                    }
-                }
-                if(Input.GetKey(KeyCode.F))
-                {
-                    trapLogic.deleteTrap(hit);
-                    isPlaceEmpty = true;
-                    trapLogic.isEmptySet(true);
-                }
-                isPlacable = false;
-                placeTrap(hit);
+                InstantiateGhostTrap(hit);
             }
-            else
+
+            if (ghostCreated && (tempIndex != index))
             {
-                Debug.Log("TOO FAR");
+                Destroy(ghostTrap);
+                ghostCreated = false;
             }
+
+            if (ghostCreated)
+            {
+                ghostTrap.transform.position = spawnPosCalculator(hit);
+                ghostTrap.transform.rotation = hit.transform.rotation;
+
+                isPlaceEmpty = trapLogic.isEmptyGet();
+
+                if (isPlacable && isPlaceEmpty)
+                {
+                    ghostTrap.gameObject.GetComponent<MeshRenderer>().material = green;
+                }
+                else
+                {
+                    ghostTrap.gameObject.GetComponent<MeshRenderer>().material = red;
+                }
+            }
+            if(Input.GetKey(KeyCode.F))
+            {
+                trapLogic.deleteTrap(hit);
+                isPlaceEmpty = true;
+                trapLogic.isEmptySet(true);
+            }
+            isPlacable = false;
+            placeTrap(hit);
         }
         else
         {
-            wantedCursorMode = CursorLockMode.Confined;
+            Debug.Log("TOO FAR");
         }
-        
+    }
 
+    void InstantiateGhostTrap(RaycastHit hit)
+    {
+        ghostTrap = Instantiate(GhostTrapPrefabs[index], spawnPosCalculator(hit), hit.transform.rotation);
+        ghostTrap.transform.localScale = TrapPrefabs[index].transform.lossyScale; //koyulcak trap ile ghosttrap aynı boyuta sahip olsun diye.
+        ghostCreated = true;
+        trapLogic = ghostTrap.GetComponent<TrapCollision>();
+        tempIndex = index;
     }
 
     void SetCursorState()
