@@ -11,7 +11,10 @@ public class TrapPlacer : MonoBehaviour
     public GameObject ghost;
     public Material green;
     public Material red;
-    
+
+    public LayerMask walls;
+
+
     CursorLockMode wantedCursorMode;
 
     [Range(10, 100)]
@@ -77,7 +80,7 @@ public class TrapPlacer : MonoBehaviour
         {
             wantedCursorMode = CursorLockMode.Locked;
 
-            if (Physics.Raycast(originAim, fpsCam.transform.forward, out hit, maxDistance))
+            if (Physics.Raycast(originAim, fpsCam.transform.forward, out hit, maxDistance, walls))
             {
                 if (!ghostCreated)
                 {
