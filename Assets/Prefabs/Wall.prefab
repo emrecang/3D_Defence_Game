@@ -13,11 +13,12 @@ GameObject:
   - component: {fileID: 1944692080139478386}
   - component: {fileID: 1944692080139478385}
   - component: {fileID: 1944692080139478384}
+  - component: {fileID: 3629665983048144796}
   m_Layer: 10
   m_Name: Wall
   m_TagString: WallObject
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1944692080139478348
@@ -106,3 +107,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Trap:
   - {fileID: 3869084620160313342, guid: 7069308a65ddc8245a4d64ffc51426c5, type: 3}
+--- !u!208 &3629665983048144796
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944692080139478391}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
