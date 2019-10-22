@@ -1,1 +1,2 @@
-# Unity oyun moturu ve C# dilinde ekip arkadaşımla beraber Tasarım Projesi olarak hala geliştirmekte olduğumuz. Merkezimizi tuzaklar ve silahlar yardımıyla korumaya çalıştığımız bir oyundur. Ayrıca klasik unity design ile ECS design’ın arasındaki performans farkı ortaya koyulmaya çalışılmaktadır.
+# Unity oyun moturu ve C# dilinde ekip arkadaşımla beraber Tasarım ve Bitirme Projesi olarak hala geliştirmekte olduğumuz. Merkezimizi tuzaklar ve silahlar yardımıyla korumaya çalıştığımız bir oyundur. Oyundan ayrı olarak Object Oriented Design ile Data Oriented Design arasındaki performans farkını ortaya koymak amaçlanmaktadır. 
+*Not: Data Oriented Design olarak Unity'nin yakın zamanda çıkardığı ECS yeni adıyla DOTS kullanılacaktır.
